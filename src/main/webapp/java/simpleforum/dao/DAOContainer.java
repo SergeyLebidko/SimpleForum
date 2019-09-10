@@ -17,7 +17,7 @@ public class DAOContainer {
         accountDAO = (AccountDAO) springContext.getBean("account_dao");
     }
 
-    public AccountDAO getAccountDAO(HttpServletRequest req) {
+    public static AccountDAO getAccountDAO(HttpServletRequest req) {
         if (accountDAO == null) {
             load(req);
         }
