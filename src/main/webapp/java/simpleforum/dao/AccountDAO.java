@@ -37,4 +37,14 @@ public class AccountDAO {
         return list.get(0);
     }
 
+    public void createAccount(String firstName, String lastName, String username, String password){
+        String query = "INSERT INTO ACCOUNTS (first_name, last_name, username, password) VALUES (:firstName, :lastName, :username, :password)";
+        Map<String, Object> params = new HashMap<>();
+        params.put("firstName", firstName);
+        params.put("lastName", lastName);
+        params.put("username", username);
+        params.put("password", password);
+        jdbcTemplate.update(query, params);
+    }
+
 }

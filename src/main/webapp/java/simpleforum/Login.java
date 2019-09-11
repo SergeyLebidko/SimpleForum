@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
                     "<h3>Вход</h3>" +
                     "<form method='post'>" +
                     "<table>" +
-                    "<tr><td>Имя: </td><td><input type='text' name='username' size=20 maxlength=50></td></tr>" +
+                    "<tr><td>Логин: </td><td><input type='text' name='username' size=20 maxlength=50></td></tr>" +
                     "<tr><td>Пароль: </td><td><input type='password' name='password' size=20 maxlength=50></td></tr>" +
                     "</table>" +
                     "<br>" +
