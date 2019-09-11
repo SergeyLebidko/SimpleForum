@@ -13,26 +13,39 @@ public class AccountDAO {
 
     private SimpleJdbcTemplate jdbcTemplate;
 
+    private ParameterizedRowMapper<Account> rowMapperForAccount = new ParameterizedRowMapper<Account>() {
+        @Override
+        public Account mapRow(ResultSet resultSet, int i) throws SQLException {
+            int id = resultSet.getInt("id");
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            String username = resultSet.getString("username");
+            String password = resultSet.getString("password");
+            return new Account(id, firstName, lastName, username, password);
+        }
+    };
+
+    private Map<String, Object> params;
+
     public AccountDAO(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        params = new HashMap<>();
     }
 
     public Account getAccountByUsername(String username) {
         String query = "SELECT * FROM accounts WHERE username=:username";
-        ParameterizedRowMapper<Account> rowMapper = new ParameterizedRowMapper<Account>() {
-            @Override
-            public Account mapRow(ResultSet resultSet, int i) throws SQLException {
-                int id = resultSet.getInt("id");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                return new Account(id, firstName, lastName, username, password);
-            }
-        };
-        Map<String, Object> param = new HashMap<>();
-        param.put("username", username);
-        List<Account> list = jdbcTemplate.query(query, rowMapper, param);
+        params.clear();
+        params.put("username", username);
+        List<Account> list = jdbcTemplate.query(query, rowMapperForAccount, params);
+        if (list.isEmpty()) return null;
+        return list.get(0);
+    }
+
+    public Account getAccountById(int id){
+        String query = "SELECT * FROM accounts WHERE id=:id";
+        params.clear();
+        params.put("id", id);
+        List<Account> list = jdbcTemplate.query(query, rowMapperForAccount, params);
         if (list.isEmpty()) return null;
         return list.get(0);
     }

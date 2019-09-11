@@ -1,6 +1,6 @@
 package simpleforum;
 
-import simpleforum.dao.Account;
+import simpleforum.dao.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.List;
 
 public class Index extends HttpServlet {
 
@@ -38,11 +41,26 @@ public class Index extends HttpServlet {
             out.print("Simple Forum - <a href='login'>Войти</a> - <a href='register'>Зарегистрироваться</a>");
         }
 
-        //Вставить код вывода списка тем форума
-        out.print("<br><p>Список тем форума</p>");
+        //Выводим список тем форума
+        TopicDAO topicDAO = DAOContainer.getTopicDAO(req);
+        AccountDAO accountDAO = DAOContainer.getAccountDAO(req);
+
+        List<Topic> topicList = topicDAO.getAllTopics();
+        Account topicAccount;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        out.print("<br><h3>Темы форума</h3>");
+        for (Topic topic : topicList) {
+            topicAccount = accountDAO.getAccountById(topic.getUserId());
+            out.print("<p style='margin: 15px'>");
+            out.print(topicAccount.getFirstName() + " " + topicAccount.getLastName() + "<br>");
+            out.print(formatter.format(topic.getDateAdded())+"<br>");
+            out.print("<a href='topic_viewer' style='font-weight:bold'>" + topic.getHeaderText() + "</a>");
+            out.print("</p>");
+        }
 
         //Если пользователь залогинился, то он может добавлять новые темы
-        if (isLogin){
+        if (isLogin) {
             out.print("<a href='create_topic'>Добавить тему</a>");
         }
 
