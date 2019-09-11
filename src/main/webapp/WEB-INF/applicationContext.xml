@@ -4,8 +4,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
-
     <bean id="account_dao" class="simpleforum.dao.AccountDAO">
+        <constructor-arg ref="jdbc_template"/>
+    </bean>
+
+    <bean id="topic_dao" class="simpleforum.dao.TopicDAO">
         <constructor-arg ref="jdbc_template"/>
     </bean>
 

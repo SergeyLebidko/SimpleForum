@@ -38,6 +38,14 @@ public class Index extends HttpServlet {
             out.print("Simple Forum - <a href='login'>Войти</a> - <a href='register'>Зарегистрироваться</a>");
         }
 
+        //Вставить код вывода списка тем форума
+        out.print("<br><p>Список тем форума</p>");
+
+        //Если пользователь залогинился, то он может добавлять новые темы
+        if (isLogin){
+            out.print("<a href='create_topic'>Добавить тему</a>");
+        }
+
         out.print("</body>");
         out.print("</html>");
     }
