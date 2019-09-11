@@ -35,6 +35,7 @@ public class Login extends HttpServlet {
         resp.setCharacterEncoding("Windows-1251");
         resp.setContentType("text/html");
 
+        //Выводим страничку входа
         PrintWriter out = resp.getWriter();
         out.print(loginPage);
     }
@@ -48,13 +49,17 @@ public class Login extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
+        //Ищем пользователя с введенным именем
         AccountDAO accountDAO = DAOContainer.getAccountDAO(req);
         Account account = accountDAO.getAccountByUsername(username);
 
+        //Если такой пользователь не найден - снова выводим страничку ввода учетных данных
         if (account == null || !password.equals(account.getPassword())) {
             resp.sendRedirect("login");
             return;
         }
+
+        //Если пользователь найден - переходим на главную страницу
         HttpSession session = req.getSession(true);
         session.setAttribute("login_user", account);
         resp.sendRedirect("index");

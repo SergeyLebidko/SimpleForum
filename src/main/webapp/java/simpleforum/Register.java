@@ -52,11 +52,13 @@ public class Register extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
+        //Не должно быть не заполненных полей
         if (firstName.equals("") || lastName.equals("") || username.equals("") || password.equals("")) {
             resp.sendRedirect("register");
             return;
         }
 
+        //Если такой пользователь уже существует, то снова выводим страницу регистрации
         AccountDAO accountDAO = DAOContainer.getAccountDAO(req);
         Account account = accountDAO.getAccountByUsername(username);
         if (account != null) {
@@ -64,6 +66,7 @@ public class Register extends HttpServlet {
             return;
         }
 
+        //Если все проверки прошли успешно, то создаем пользователя и переводим его на главную страницу
         accountDAO.createAccount(firstName, lastName, username, password);
         account = accountDAO.getAccountByUsername(username);
 

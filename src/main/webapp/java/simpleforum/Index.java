@@ -19,16 +19,27 @@ public class Index extends HttpServlet {
 
         HttpSession session = req.getSession(false);
         Account account = null;
+        boolean isLogin = false;
         if (session != null) {
             account = (Account) session.getAttribute("login_user");
+            isLogin = true;
         }
 
         PrintWriter out = resp.getWriter();
+        out.print("<html>");
+        out.print("<head><title>Simple Forum - Главная</title></head>");
+        out.print("<body>");
 
-        out.print("<h3>Главная страница</h3>");
-        if (account != null) {
-            out.print("<br>Вошёл: " + account.getUsername());
+        //Формируем заголовок страницы в зависимости от того, залогинился пользователь или нет
+        if (isLogin) {
+            String fullName = account.getFirstName() + " " + account.getLastName();
+            out.print("Simple Forum - Добро пожаловать, " + fullName + " - <a href='logout'>Выйти</a>");
+        } else {
+            out.print("Simple Forum - <a href='login'>Войти</a> - <a href='register'>Зарегистрироваться</a>");
         }
+
+        out.print("</body>");
+        out.print("</html>");
     }
 
 }
