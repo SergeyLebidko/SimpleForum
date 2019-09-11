@@ -67,7 +67,7 @@ public class TopicCreator extends HttpServlet {
         }
 
         //Записываем данные в базу данных
-        TopicDAO topicDAO = DAOContainer.getTopicDAO(req);
+        TopicDAO topicDAO = DAOContainer.getTopicDAO();
         topicDAO.createTopic(userId, dateAdded, headerText);
 
         //Переходим на главную страницу

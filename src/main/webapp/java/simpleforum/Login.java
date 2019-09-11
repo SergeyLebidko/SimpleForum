@@ -50,7 +50,7 @@ public class Login extends HttpServlet {
         String password = req.getParameter("password");
 
         //Ищем пользователя с введенным именем
-        AccountDAO accountDAO = DAOContainer.getAccountDAO(req);
+        AccountDAO accountDAO = DAOContainer.getAccountDAO();
         Account account = accountDAO.getAccountByUsername(username);
 
         //Если такой пользователь не найден - снова выводим страничку ввода учетных данных

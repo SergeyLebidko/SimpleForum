@@ -2,34 +2,37 @@ package simpleforum.dao;
 
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
-public class DAOContainer {
+public class DAOContainer implements ServletContextListener {
+
+    private XmlWebApplicationContext springContext;
 
     private static AccountDAO accountDAO = null;
     private static TopicDAO topicDAO = null;
 
-    private static void load(HttpServletRequest req) {
-        XmlWebApplicationContext springContext = new XmlWebApplicationContext();
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        springContext = new XmlWebApplicationContext();
         springContext.setConfigLocation("/WEB-INF/applicationContext.xml");
-        springContext.setServletContext(req.getServletContext());
+        springContext.setServletContext(sce.getServletContext());
         springContext.refresh();
 
         accountDAO = (AccountDAO) springContext.getBean("account_dao");
         topicDAO = (TopicDAO) springContext.getBean("topic_dao");
     }
 
-    public static AccountDAO getAccountDAO(HttpServletRequest req) {
-        if (accountDAO == null) {
-            load(req);
-        }
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        springContext.close();
+    }
+
+    public static AccountDAO getAccountDAO() {
         return accountDAO;
     }
 
-    public static TopicDAO getTopicDAO(HttpServletRequest req) {
-        if (topicDAO == null) {
-            load(req);
-        }
+    public static TopicDAO getTopicDAO() {
         return topicDAO;
     }
 

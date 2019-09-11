@@ -18,7 +18,7 @@ public class TopicDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createTopic(int userId, LocalDateTime dateAdded, String headerText){
+    public void createTopic(int userId, LocalDateTime dateAdded, String headerText) {
         String query = "INSERT INTO topics (user_id, date_added, header_text) " +
                 "values(:userId, make_timestamp(:year, :month, :day, :hour, :min, :sec), :headerText)";
         Map<String, Object> params = new HashMap<>();
@@ -33,7 +33,7 @@ public class TopicDAO {
         jdbcTemplate.update(query, params);
     }
 
-    public List<Topic> getAllTopics(){
+    public List<Topic> getAllTopics() {
         String query = "SELECT * FROM topics ORDER BY date_added";
         ParameterizedRowMapper<Topic> rowMapper = new ParameterizedRowMapper<Topic>() {
             @Override

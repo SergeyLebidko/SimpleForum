@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
 
 public class Index extends HttpServlet {
@@ -42,8 +41,8 @@ public class Index extends HttpServlet {
         }
 
         //Выводим список тем форума
-        TopicDAO topicDAO = DAOContainer.getTopicDAO(req);
-        AccountDAO accountDAO = DAOContainer.getAccountDAO(req);
+        TopicDAO topicDAO = DAOContainer.getTopicDAO();
+        AccountDAO accountDAO = DAOContainer.getAccountDAO();
 
         List<Topic> topicList = topicDAO.getAllTopics();
         Account topicAccount;

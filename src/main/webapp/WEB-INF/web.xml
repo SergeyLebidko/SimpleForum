@@ -5,6 +5,10 @@
 <web-app>
   <display-name>SimpleForum</display-name>
 
+  <listener>
+    <listener-class>simpleforum.dao.DAOContainer</listener-class>
+  </listener>
+
   <!-- Объявления сервлетов -->
   <servlet>
     <servlet-name>login</servlet-name>

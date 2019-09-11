@@ -59,7 +59,7 @@ public class Register extends HttpServlet {
         }
 
         //Если такой пользователь уже существует, то снова выводим страницу регистрации
-        AccountDAO accountDAO = DAOContainer.getAccountDAO(req);
+        AccountDAO accountDAO = DAOContainer.getAccountDAO();
         Account account = accountDAO.getAccountByUsername(username);
         if (account != null) {
             resp.sendRedirect("register");
