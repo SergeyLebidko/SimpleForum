@@ -9,8 +9,9 @@ public class DAOContainer implements ServletContextListener {
 
     private XmlWebApplicationContext springContext;
 
-    private static AccountDAO accountDAO = null;
-    private static TopicDAO topicDAO = null;
+    private static AccountDAO accountDAO;
+    private static TopicDAO topicDAO;
+    private static RecordDAO recordDAO;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -21,6 +22,7 @@ public class DAOContainer implements ServletContextListener {
 
         accountDAO = (AccountDAO) springContext.getBean("account_dao");
         topicDAO = (TopicDAO) springContext.getBean("topic_dao");
+        recordDAO = (RecordDAO) springContext.getBean("record_dao");
     }
 
     @Override
@@ -34,6 +36,10 @@ public class DAOContainer implements ServletContextListener {
 
     public static TopicDAO getTopicDAO() {
         return topicDAO;
+    }
+
+    public static RecordDAO getRecordDAO() {
+        return recordDAO;
     }
 
 }

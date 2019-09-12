@@ -12,6 +12,10 @@
         <constructor-arg ref="jdbc_template"/>
     </bean>
 
+    <bean id="record_dao" class="simpleforum.dao.RecordDAO">
+        <constructor-arg ref="jdbc_template"/>
+    </bean>
+
     <bean id="jdbc_template" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
         <constructor-arg ref="data_source"/>
     </bean>
