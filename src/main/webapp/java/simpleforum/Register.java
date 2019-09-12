@@ -34,19 +34,12 @@ public class Register extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("Windows-1251");
-        resp.setContentType("text/html");
-
         PrintWriter out = resp.getWriter();
         out.print(registerPage);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("Windows-1251");
-        resp.setCharacterEncoding("Windows-1251");
-        resp.setContentType("text/html");
-
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
         String username = req.getParameter("username");

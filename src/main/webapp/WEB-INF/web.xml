@@ -5,6 +5,16 @@
 <web-app>
   <display-name>SimpleForum</display-name>
 
+  <filter>
+    <filter-name>character_filter</filter-name>
+    <filter-class>simpleforum.filters.EncodingFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>character_filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
   <listener>
     <listener-class>simpleforum.dao.DAOContainer</listener-class>
   </listener>

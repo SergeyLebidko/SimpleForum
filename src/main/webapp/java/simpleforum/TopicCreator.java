@@ -30,9 +30,6 @@ public class TopicCreator extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("Windows-1251");
-        resp.setContentType("text/html");
-
         //Сперва проверяем, залогинился ли пользователь. И если нет, то переходим на главную страницу
         HttpSession session = req.getSession(false);
         if (session == null) {
@@ -50,8 +47,6 @@ public class TopicCreator extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("Windows-1251");
-
         //Из сессии получаем пытаемся получить аккаунт пользователя
         HttpSession session = req.getSession(false);
         Account account = (Account) session.getAttribute("login_user");
@@ -61,7 +56,7 @@ public class TopicCreator extends HttpServlet {
         String headerText = req.getParameter("topic_name");
 
         //Проверяем, заполнено ли поле с названием темы
-        if (headerText.equals("")){
+        if (headerText.equals("")) {
             resp.sendRedirect("create_topic");
             return;
         }

@@ -32,9 +32,6 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("Windows-1251");
-        resp.setContentType("text/html");
-
         //Выводим страничку входа
         PrintWriter out = resp.getWriter();
         out.print(loginPage);
@@ -42,10 +39,6 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("Windows-1251");
-        resp.setCharacterEncoding("Windows-1251");
-        resp.setContentType("text/html");
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 

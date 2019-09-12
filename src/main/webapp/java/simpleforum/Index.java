@@ -16,9 +16,6 @@ public class Index extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("Windows-1251");
-        resp.setContentType("text/html");
-
         HttpSession session = req.getSession(false);
         Account account = null;
         boolean isLogin = false;
