@@ -3,12 +3,12 @@ package simpleforum;
 import simpleforum.dao.Account;
 import simpleforum.dao.DAOContainer;
 import simpleforum.dao.TopicDAO;
+import simpleforum.utilities.SessionUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -31,14 +31,9 @@ public class TopicCreator extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Сперва проверяем, залогинился ли пользователь. И если нет, то переходим на главную страницу
-        HttpSession session = req.getSession(false);
-        if (session == null) {
-            resp.sendRedirect("index");
+        if (SessionUtilities.redirectIfNotLogin(req, resp, "index")){
             return;
         }
-
-        //Из сессии получаем пытаемся получить аккаунт пользователя
-        Account account = (Account) session.getAttribute("login_user");
 
         //Выводим страничку создания темы
         PrintWriter out = resp.getWriter();
@@ -48,8 +43,7 @@ public class TopicCreator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Из сессии получаем пытаемся получить аккаунт пользователя
-        HttpSession session = req.getSession(false);
-        Account account = (Account) session.getAttribute("login_user");
+        Account account = SessionUtilities.getEnteredUser(req);
 
         int userId = account.getId();
         LocalDateTime dateAdded = LocalDateTime.now();

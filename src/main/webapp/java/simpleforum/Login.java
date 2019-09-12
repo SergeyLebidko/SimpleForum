@@ -3,6 +3,7 @@ package simpleforum;
 import simpleforum.dao.Account;
 import simpleforum.dao.AccountDAO;
 import simpleforum.dao.DAOContainer;
+import simpleforum.utilities.SessionUtilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +33,11 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Если пользователь уже залогинился, то сразу же переводим его на главную страницу
+        if (SessionUtilities.redirectIfLogin(req, resp, "index")){
+            return;
+        }
+
         //Выводим страничку входа
         PrintWriter out = resp.getWriter();
         out.print(loginPage);
