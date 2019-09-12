@@ -5,6 +5,7 @@
 <web-app>
   <display-name>SimpleForum</display-name>
 
+  <!-- Объявления и маппинг фильтров -->
   <filter>
     <filter-name>character_filter</filter-name>
     <filter-class>simpleforum.filters.EncodingFilter</filter-class>
@@ -15,6 +16,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!-- Объявления слушателей -->
   <listener>
     <listener-class>simpleforum.dao.DAOContainer</listener-class>
   </listener>
@@ -45,6 +47,11 @@
     <servlet-class>simpleforum.TopicCreator</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>view_topic</servlet-name>
+    <servlet-class>simpleforum.TopicViewer</servlet-class>
+  </servlet>
+
   <!-- Маппинг сервлетов -->
   <servlet-mapping>
     <servlet-name>login</servlet-name>
@@ -69,6 +76,11 @@
   <servlet-mapping>
     <servlet-name>create_topic</servlet-name>
     <url-pattern>/create_topic</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>view_topic</servlet-name>
+    <url-pattern>/view_topic</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>

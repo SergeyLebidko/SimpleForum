@@ -46,7 +46,7 @@ public class Index extends HttpServlet {
             out.print("<p style='margin: 15px'>");
             out.print(topicAccount.getFirstName() + " " + topicAccount.getLastName() + "<br>");
             out.print(formatter.format(topic.getDateAdded())+"<br>");
-            out.print("<a href='topic_viewer' style='font-weight:bold'>" + topic.getHeaderText() + "</a>");
+            out.print("<a href='view_topic' style='font-weight:bold'>" + topic.getHeaderText() + "</a>");
             out.print("</p>");
         }
 
