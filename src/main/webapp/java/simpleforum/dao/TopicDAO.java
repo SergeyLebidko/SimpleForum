@@ -14,8 +14,22 @@ public class TopicDAO {
 
     private SimpleJdbcTemplate jdbcTemplate;
 
+    private ParameterizedRowMapper<Topic> rowMapper = new ParameterizedRowMapper<Topic>() {
+        @Override
+        public Topic mapRow(ResultSet resultSet, int i) throws SQLException {
+            int id = resultSet.getInt("id");
+            int userId = resultSet.getInt("user_id");
+            LocalDateTime dateAdded = resultSet.getObject("date_added", LocalDateTime.class);
+            String headerText = resultSet.getString("header_text");
+            return new Topic(id, userId, dateAdded, headerText);
+        }
+    };
+
+    private Map<String, Object> params;
+
     public TopicDAO(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        params = new HashMap<>();
     }
 
     public void createTopic(int userId, LocalDateTime dateAdded, String headerText) {
@@ -35,17 +49,14 @@ public class TopicDAO {
 
     public List<Topic> getAllTopics() {
         String query = "SELECT * FROM topics ORDER BY date_added";
-        ParameterizedRowMapper<Topic> rowMapper = new ParameterizedRowMapper<Topic>() {
-            @Override
-            public Topic mapRow(ResultSet resultSet, int i) throws SQLException {
-                int id = resultSet.getInt("id");
-                int userId = resultSet.getInt("user_id");
-                LocalDateTime dateAdded = resultSet.getObject("date_added", LocalDateTime.class);
-                String headerText = resultSet.getString("header_text");
-                return new Topic(id, userId, dateAdded, headerText);
-            }
-        };
         return jdbcTemplate.query(query, rowMapper);
+    }
+
+    public Topic getTopicById(int topicId){
+        String query = "SELECT * FROM topics WHERE id=:topicId";
+        params.clear();
+        params.put("topicId", topicId);
+        return jdbcTemplate.queryForObject(query, rowMapper, params);
     }
 
 }

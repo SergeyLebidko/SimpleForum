@@ -45,8 +45,8 @@ public class Index extends HttpServlet {
             topicAccount = accountDAO.getAccountById(topic.getUserId());
             out.print("<p style='margin: 15px'>");
             out.print(topicAccount.getFirstName() + " " + topicAccount.getLastName() + "<br>");
-            out.print(formatter.format(topic.getDateAdded())+"<br>");
-            out.print("<a href='view_topic' style='font-weight:bold'>" + topic.getHeaderText() + "</a>");
+            out.print(formatter.format(topic.getDateAdded()) + "<br>");
+            out.print("<a href='view_topic?topic_id=" + topic.getId() + "' style='font-weight:bold'>" + topic.getHeaderText() + "</a>");
             out.print("</p>");
         }
 
