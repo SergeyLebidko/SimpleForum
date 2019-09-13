@@ -1,6 +1,7 @@
 package simpleforum;
 
 import simpleforum.dao.*;
+import simpleforum.utilities.HeaderCreator;
 import simpleforum.utilities.SessionUtilities;
 
 import javax.servlet.ServletException;
@@ -30,6 +31,7 @@ public class TopicViewer extends HttpServlet {
         out.print("<html>");
         out.print("<head><title>Simple Forum - " + topic.getHeaderText() + "</title></head>");
         out.print("<body>");
+        out.print(HeaderCreator.createHeader(req));
 
         //Получаем все сообщения выбранной темы и выводим их
         List<Record> recordList = recordDAO.getRecordsByTopicId(topicId);
@@ -50,7 +52,7 @@ public class TopicViewer extends HttpServlet {
         boolean isLogin = SessionUtilities.isLogin(req);
         if (isLogin){
             out.print("<form name='msg_form' method='post'>");
-            out.print("<textarea cols=50 rows=5 name='content' wrap=virtual></textarea><br>");
+            out.print("<textarea cols=50 rows=5 name='content' wrap=virtual></textarea><br><br>");
             out.print("<input type=submit name='ok' value='Отправить'");
             out.print("</form>");
         }

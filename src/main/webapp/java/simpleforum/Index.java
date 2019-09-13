@@ -1,6 +1,7 @@
 package simpleforum;
 
 import simpleforum.dao.*;
+import simpleforum.utilities.HeaderCreator;
 import simpleforum.utilities.SessionUtilities;
 
 import javax.servlet.ServletException;
@@ -19,18 +20,12 @@ public class Index extends HttpServlet {
         Account account = SessionUtilities.getEnteredUser(req);
         boolean isLogin = SessionUtilities.isLogin(req);
 
+        //Формируем заголовок
         PrintWriter out = resp.getWriter();
         out.print("<html>");
         out.print("<head><title>Simple Forum - Главная</title></head>");
         out.print("<body>");
-
-        //Формируем заголовок страницы в зависимости от того, залогинился пользователь или нет
-        if (isLogin) {
-            String fullName = account.getFirstName() + " " + account.getLastName();
-            out.print("Simple Forum - Добро пожаловать, " + fullName + " - <a href='logout'>Выйти</a>");
-        } else {
-            out.print("Simple Forum - <a href='login'>Войти</a> - <a href='register'>Зарегистрироваться</a>");
-        }
+        out.print(HeaderCreator.createHeader(req));
 
         //Выводим список тем форума
         TopicDAO topicDAO = DAOContainer.getTopicDAO();
