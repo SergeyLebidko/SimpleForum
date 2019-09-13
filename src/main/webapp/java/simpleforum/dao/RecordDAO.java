@@ -2,6 +2,7 @@ package simpleforum.dao;
 
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import simpleforum.utilities.DateParametersExtractor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,17 @@ public class RecordDAO {
     public RecordDAO(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         params = new HashMap<>();
+    }
+
+    public void createRecord(int userId, int topicId, LocalDateTime dateAdded, String content) {
+        String query = "INSERT INTO records (user_id, topic_id, date_added, content) " +
+                "VALUES (:userId, :topicId, make_timestamp(:year, :month, :day, :hour, :min, :sec), :content)";
+        params.clear();
+        params.put("userId", userId);
+        params.put("topicId", topicId);
+        DateParametersExtractor.extractToParams(dateAdded, params);
+        params.put("content", content);
+        jdbcTemplate.update(query, params);
     }
 
     public List<Record> getRecordsByTopicId(int topicId) {

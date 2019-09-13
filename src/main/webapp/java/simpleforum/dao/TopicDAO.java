@@ -2,6 +2,7 @@ package simpleforum.dao;
 
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import simpleforum.utilities.DateParametersExtractor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,12 +38,7 @@ public class TopicDAO {
                 "values(:userId, make_timestamp(:year, :month, :day, :hour, :min, :sec), :headerText)";
         Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
-        params.put("year", dateAdded.getYear());
-        params.put("month", dateAdded.getMonthValue());
-        params.put("day", dateAdded.getDayOfMonth());
-        params.put("hour", dateAdded.getHour());
-        params.put("min", dateAdded.getMinute());
-        params.put("sec", dateAdded.getSecond());
+        DateParametersExtractor.extractToParams(dateAdded, params);
         params.put("headerText", headerText);
         jdbcTemplate.update(query, params);
     }
