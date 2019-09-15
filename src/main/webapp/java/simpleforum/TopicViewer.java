@@ -38,7 +38,7 @@ public class TopicViewer extends HttpServlet {
         List<Record> recordList = recordDAO.getRecordsByTopicId(topicId);
 
         if (recordList.isEmpty()) {
-            out.print("<p style='margin: 15px'>");
+            out.print("<p style='margin: 15px; width: 200px;'>");
             out.print("...список сообщений пуст...");
             out.print("</p>");
         } else {
@@ -60,12 +60,9 @@ public class TopicViewer extends HttpServlet {
         if (isLogin) {
             out.print("<form method='post'>");
             out.print("<textarea cols=50 rows=5 name='content' wrap=virtual></textarea><br><br>");
-            out.print("<input type='submit' name='ok' value='Отправить'");
+            out.print("<input type='submit' name='ok' value='Отправить'>");
             out.print("</form>");
         }
-
-        out.print("</body>");
-        out.print("</html>");
     }
 
     @Override

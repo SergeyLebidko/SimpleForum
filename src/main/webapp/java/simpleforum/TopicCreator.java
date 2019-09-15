@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 public class TopicCreator extends HttpServlet {
 
     private String createTopicPage =
-            "<html>" +
                     "<head><title>Simple Forum - Новая тема</title></head>" +
                     "<body>" +
                     "<h3>Новая тема</h3>" +
@@ -24,9 +23,7 @@ public class TopicCreator extends HttpServlet {
                     "<input type='text' name='topic_name' size=50 maxlength=256>" +
                     "<br><br>" +
                     "<input type='submit' name='ok' value='Создать'>" +
-                    "</form>" +
-                    "</body>" +
-                    "</html>";
+                    "</form>";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

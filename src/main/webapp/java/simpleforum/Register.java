@@ -16,7 +16,6 @@ import java.io.PrintWriter;
 public class Register extends HttpServlet {
 
     private String registerPage =
-            "<html>" +
                     "<head><title>Simple Forum - Регистрация</title></head>" +
                     "<body>" +
                     "<h3>Регистрация</h3>" +
@@ -29,9 +28,7 @@ public class Register extends HttpServlet {
                     "</table>" +
                     "<br>" +
                     "<input type='submit' name='ok' value='Зарегистрироваться'>" +
-                    "</form>" +
-                    "</body>" +
-                    "</html>";
+                    "</form>";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

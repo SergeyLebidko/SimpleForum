@@ -49,9 +49,6 @@ public class Index extends HttpServlet {
         if (isLogin) {
             out.print("<a href='create_topic'>Добавить тему</a>");
         }
-
-        out.print("</body>");
-        out.print("</html>");
     }
 
 }

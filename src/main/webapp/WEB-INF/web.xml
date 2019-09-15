@@ -11,8 +11,18 @@
     <filter-class>simpleforum.filters.EncodingFilter</filter-class>
   </filter>
 
+  <filter>
+    <filter-name>preparation_filter</filter-name>
+    <filter-class>simpleforum.filters.PreparationFilter</filter-class>
+  </filter>
+
   <filter-mapping>
     <filter-name>character_filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>preparation_filter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
