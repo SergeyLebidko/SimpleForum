@@ -1,0 +1,48 @@
+Таблица Accounts:
+
+CREATE TABLE public.accounts
+(
+    id integer NOT NULL DEFAULT nextval('accounts_id_seq'::regclass),
+    first_name character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    last_name character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    username character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    password character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT accounts_pkey PRIMARY KEY (id),
+    CONSTRAINT accounts_username_key UNIQUE (username)
+
+)
+
+Таблица Topics:
+
+CREATE TABLE public.topics
+(
+    id integer NOT NULL DEFAULT nextval('topics_id_seq'::regclass),
+    user_id integer NOT NULL,
+    date_added timestamp without time zone NOT NULL,
+    header_text character varying(256) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT topics_pkey PRIMARY KEY (id),
+    CONSTRAINT topics_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.accounts (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+
+Таблица Records:
+
+CREATE TABLE public.records
+(
+    id integer NOT NULL DEFAULT nextval('records_id_seq'::regclass),
+    user_id integer NOT NULL,
+    topic_id integer NOT NULL,
+    content text COLLATE pg_catalog."default" NOT NULL,
+    date_added timestamp without time zone NOT NULL,
+    CONSTRAINT records_pkey PRIMARY KEY (id),
+    CONSTRAINT records_topic_id_fkey FOREIGN KEY (topic_id)
+        REFERENCES public.topics (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT records_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.accounts (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
